@@ -40,4 +40,13 @@ public class UserMeal {
     public int getCalories() {
         return calories;
     }
+
+    @Override
+    public String toString() {
+        return "UserMeal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}';
+    }
 }
