@@ -34,6 +34,8 @@
                 <th>Дата</th>
                 <th>Описание</th>
                 <th>Килокалории</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
             </tr>
         </thead>
 
@@ -49,6 +51,8 @@
                 <td><fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/></td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
+                <td><a href="meals?action=edit&id=<c:out value="${meal.id}"/>">Редактировать</a></td>
+                <td><a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Удалить</a></td>
             </tr>
         </c:forEach>
     </table>
