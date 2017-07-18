@@ -15,6 +15,27 @@ import java.util.stream.Collectors;
  * 31.05.2015.
  */
 public class MealsUtil {
+    public final static int DEFAULT_CALORIES_PER_DAY = 2000;
+
+    public final static List<Meal> MEALS;
+
+    static {
+        MEALS = Arrays.asList(
+                new Meal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 29, 13, 0), "Обед", 1500),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 29, 20, 0), "Ужин", 700),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
+                new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510),
+                new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 10, 0), "Завтрак", 300),
+                new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 13, 0), "Обед", 900),
+                new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 20, 0), "Ужин", 750)
+        );
+    }
+
     public static void main(String[] args) {
         List<Meal> meals = Arrays.asList(
                 new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
@@ -34,7 +55,7 @@ public class MealsUtil {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
-//                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
+                        //Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
 
         return meals.stream()
@@ -47,7 +68,7 @@ public class MealsUtil {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
-//                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
+                        //Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
 
         return meals.stream()
@@ -72,4 +93,6 @@ public class MealsUtil {
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
         return new MealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
     }
+
+
 }

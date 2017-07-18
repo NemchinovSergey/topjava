@@ -11,8 +11,20 @@
 <html>
 <head>
     <title>Meal list</title>
+    <style>
+        .normal {
+            color: black;
+            background-color: greenyellow;
+        }
+
+        .exceeded {
+            color: black;
+            background-color: palevioletred;
+        }
+    </style>
 </head>
 <body>
+<section>
     <h2><a href="index.html">Home</a></h2>
     <h2>Meal list</h2>
 
@@ -22,7 +34,6 @@
                 <th>Дата</th>
                 <th>Описание</th>
                 <th>Килокалории</th>
-                <th>Превышение</th>
             </tr>
         </thead>
 
@@ -32,14 +43,15 @@
         <jsp:useBean id="meals" scope="request" type="java.util.List"/>
 
         <c:forEach var="meal" items="${meals}" >
-            <tr style="background-color: <c:out value="${meal.exceed ? 'palevioletred' : 'greenyellow'}" />; color: black;">
+            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
+            <tr class="${meal.exceed ? 'exceeded' : 'normal'}" >
                 <fmt:parseDate value="${meal.dateTime}" pattern="${parsePattern}" var="parsedDateTime"/>
                 <td><fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/></td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td>${meal.exceed}</td>
             </tr>
         </c:forEach>
     </table>
+</section>
 </body>
 </html>
