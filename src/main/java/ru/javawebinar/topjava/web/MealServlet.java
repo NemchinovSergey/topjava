@@ -27,7 +27,6 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         LOG.debug("init() begin");
-        super.init();
 
         meals = Arrays.asList(
                 new Meal(LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500),

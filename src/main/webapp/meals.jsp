@@ -16,9 +16,7 @@
     <h2><a href="index.html">Home</a></h2>
     <h2>Meal list</h2>
 
-    <%--<p>contextPath: "${pageContext.servletContext.contextPath}"</p>--%>
-
-    <table border="1">
+    <table border="1" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
                 <th>Дата</th>
@@ -27,18 +25,16 @@
                 <th>Превышение</th>
             </tr>
         </thead>
-        <c:forEach var="meal" items="${meals}" >
-            <c:choose>
-                <c:when test="${meal.exceed}">
-                    <tr style="background-color:palevioletred;color:black;" >
-                </c:when>
-                <c:otherwise>
-                    <tr style="background-color:greenyellow;color:black;" >
-                </c:otherwise>
-            </c:choose>
 
-                <td>${meal.dateTimeStr}</td>
-                <%--<td><fmt:formatDate value="${meal.dateTime}" pattern="HH:mm dd.MM.yyyy"/></td>--%>
+        <c:set var="parsePattern" value="yyyy-MM-dd'T'HH:mm"/>
+        <c:set var="dateTimePattern" value="yyyy.MM.dd HH:mm"/>
+
+        <jsp:useBean id="meals" scope="request" type="java.util.List"/>
+
+        <c:forEach var="meal" items="${meals}" >
+            <tr style="background-color: <c:out value="${meal.exceed ? 'palevioletred' : 'greenyellow'}" />; color: black;">
+                <fmt:parseDate value="${meal.dateTime}" pattern="${parsePattern}" var="parsedDateTime"/>
+                <td><fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/></td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td>${meal.exceed}</td>

@@ -39,10 +39,6 @@ public class MealWithExceed {
         return exceed;
     }
 
-    public String getDateTimeStr() {
-        return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
     @Override
     public String toString() {
         return "UserMealWithExceed{" +
