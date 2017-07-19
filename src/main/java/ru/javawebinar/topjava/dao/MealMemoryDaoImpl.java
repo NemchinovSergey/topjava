@@ -9,16 +9,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealMemoryDaoImpl implements MealDao {
-    private static final Logger LOG = getLogger(MealMemoryDaoImpl.class);
+    private final Logger LOG = getLogger(MealMemoryDaoImpl.class);
 
-    public final static ConcurrentHashMap<Integer, Meal> MEALS = new ConcurrentHashMap<>();
+    private final AtomicInteger counter = new AtomicInteger(0);
+    public final ConcurrentHashMap<Integer, Meal> MEALS = new ConcurrentHashMap<>();
 
-    static {
-        LOG.debug("static initialization");
+    {
+        LOG.debug("initialization");
 
         List<Meal> mealList = Arrays.asList(
                 new Meal(LocalDateTime.of(2017, Month.MAY, 29, 10, 0), "Завтрак", 500),
@@ -35,36 +37,35 @@ public class MealMemoryDaoImpl implements MealDao {
                 new Meal(LocalDateTime.of(2017, Month.JUNE, 1, 20, 0), "Ужин", 750)
         );
 
-        mealList.forEach(meal -> MEALS.put(MEALS.size(), meal));
+        mealList.forEach(this::save);
     }
     
     @Override
-    public void addMeal(Meal meal) {
-        LOG.debug("addMeal: {}", meal);
+    public void save(Meal meal) {
+        LOG.debug("save: {}", meal);
+        if (meal.getId() == null) {
+            meal.setId(counter.getAndIncrement());
+        }
         MEALS.put(meal.getId(), meal);
     }
 
     @Override
-    public void deleteMeal(int id) {
-        LOG.debug("deleteMeal: {}", id);
+    public void delete(int id) {
+        LOG.debug("delete: {}", id);
         MEALS.remove(id);
     }
 
     @Override
-    public void updateMeal(Meal meal) {
-        LOG.debug("updateMeal: {}", meal);
-        MEALS.put(meal.getId(), meal);
+    public Meal get(int id) {
+        LOG.debug("get: {}", id);
+        Meal meal = MEALS.get(id);
+        LOG.debug("meal: {}", meal);
+        return meal;
     }
 
     @Override
-    public Meal getMealById(int id) {
-        LOG.debug("getMealById: {}", id);
-        return MEALS.get(id);
-    }
-
-    @Override
-    public List<Meal> getAllMeals() {
-        LOG.debug("getAllMeals()");
+    public List<Meal> getAll() {
+        LOG.debug("getAll()");
         return new ArrayList<>(MEALS.values());
     }
 }

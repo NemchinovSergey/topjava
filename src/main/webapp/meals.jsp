@@ -31,6 +31,7 @@
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Дата</th>
                 <th>Описание</th>
                 <th>Килокалории</th>
@@ -47,6 +48,7 @@
         <c:forEach var="meal" items="${meals}" >
             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
             <tr class="${meal.exceed ? 'exceeded' : 'normal'}" >
+                <td>${meal.id}</td>
                 <fmt:parseDate value="${meal.dateTime}" pattern="${parsePattern}" var="parsedDateTime"/>
                 <td><fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/></td>
                 <td>${meal.description}</td>
@@ -56,6 +58,7 @@
             </tr>
         </c:forEach>
     </table>
+    <p><a href="meals?action=add">Добавить</a></p>
 </section>
 </body>
 </html>
