@@ -29,7 +29,7 @@
             <tr>
                 <td>Дата/время</td>
                 <fmt:parseDate value="${meal.dateTime}" pattern="${parsePattern}" var="parsedDateTime"/>
-                <td><input type="datetime" name="both" value="<fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/>"/></td>
+                <td><input type="datetime" name="date" value="<fmt:formatDate value="${parsedDateTime}" pattern="${dateTimePattern}"/>"/></td>
             </tr>
             <tr>
                 <td>Описание</td>

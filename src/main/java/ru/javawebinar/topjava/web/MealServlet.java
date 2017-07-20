@@ -40,7 +40,9 @@ public class MealServlet extends HttpServlet {
         if ("DELETE".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             mealDao.delete(id);
-        } else if ("EDIT".equalsIgnoreCase(action)) {
+            response.sendRedirect("meals");
+            return;
+        } if ("EDIT".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             forward = INSERT_OR_EDIT;
             request.setAttribute("meal", mealDao.get(id));
