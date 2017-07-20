@@ -42,15 +42,13 @@ public class MealServlet extends HttpServlet {
             mealDao.delete(id);
             response.sendRedirect("meals");
             return;
-        } if ("EDIT".equalsIgnoreCase(action)) {
+        } else if ("EDIT".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
             forward = INSERT_OR_EDIT;
             request.setAttribute("meal", mealDao.get(id));
         } else if ("ADD".equalsIgnoreCase(action)) {
             forward = INSERT_OR_EDIT;
-        }
-
-        if (forward == null || forward.isEmpty()) {
+        } else {
             forward = LIST_MEALS;
             request.setAttribute("meals", MealsUtil.getMealsWithExceeded(mealDao.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
         }
@@ -70,16 +68,14 @@ public class MealServlet extends HttpServlet {
         LocalDateTime dateTime;
         try {
             dateTime = LocalDateTime.parse(req.getParameter("date"), TimeUtil.formatter);
-        }
-        catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             dateTime = LocalDateTime.now();
         }
 
         int calories;
         try {
             calories = Integer.parseInt(req.getParameter("calories"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             calories = 0;
         }
 
